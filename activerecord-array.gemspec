@@ -1,17 +1,17 @@
 # -*- encoding: utf-8 -*-
 $:.push File.expand_path("../lib", __FILE__)
-require "activerecord_array/version"
+require "activerecord/array/version"
 
 Gem::Specification.new do |s|
-  s.name        = "activerecord_array"
-  s.version     = ActiverecordArray::VERSION
+  s.name        = "activerecord-array"
+  s.version     = ActiveRecord::Array::VERSION
   s.authors     = ["Bruno Tavares"]
   s.email       = ["bruno.exz@gmail.com"]
   s.homepage    = ""
   s.summary     = %q{TODO: Write a gem summary}
   s.description = %q{TODO: Write a gem description}
 
-  s.rubyforge_project = "activerecord_array"
+  s.rubyforge_project = "activerecord-array"
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")

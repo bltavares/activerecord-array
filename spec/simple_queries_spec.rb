@@ -1,7 +1,12 @@
 require "spec_helper"
-require "ostruct"
 
-describe ActiveRecord::Array do
+describe ActiveRecord::Array, "#simple" do
+
+  #Example
+  ##
+  ##Client.where(:orders_count => 1)
+  ##SELECT * FROM clients WHERE (clients.orders_count = 1)
+
   let(:bruno) { OpenStruct.new :name => "Bruno", :age => 18, :email => "email@email.com" }
   let(:james) { OpenStruct.new :name => "James", :age => 20, :email => "james@email.com" }
 
@@ -21,7 +26,6 @@ describe ActiveRecord::Array do
 
   describe "simple query" do
     let(:ar) { ActiveRecord::Array::Base.new [bruno, james] }
-
     [
       {:query => "Bruno", :key => :name },
       {:query => "James", :key => :name },
@@ -32,7 +36,15 @@ describe ActiveRecord::Array do
         result[0].send(test[:key]).must_equal test[:query]
       end
     end
+  end
 
+  describe "nil values" do
+    let(:nil_man) { OpenStruct.new :name => nil }
+    it "should query nil values" do
+      ar = ActiveRecord::Array::Base.new [nil_man]
+      result = ar.where :name => nil
+      result.length.must_equal 1
+    end
   end
 
   describe "connected queries" do

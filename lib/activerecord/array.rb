@@ -20,7 +20,15 @@ module ActiveRecord
         proc do |me|
           conditions = *hash
           conditions.inject(true) { |out, (key, value)| 
-            out &= me.send(key) == value
+            current_value = me.send(key)
+                 out &= if value.is_a?(::Array) || value.is_a?(Range)
+                   value.include? current_value
+                 elsif  value.is_a?(Hash) && !current_value.nil?
+                   nested_proc = build_block_for_conditions(value)
+                   nested_proc.call current_value
+                 else
+                   current_value == value
+                 end
           }
         end
       end
